@@ -18,7 +18,12 @@ enum TokenType{
     IF,
     ELSE,
     WHILE,
-    FOR
+    FOR,
+    MINUS,
+    DIVIDE,
+    MULTIPLY,
+    RCURL,
+    LCURL
 };
 
 class Token{
@@ -97,6 +102,21 @@ public:
             else if(c=='('){
                 tokens.push_back(Token(TokenType::LPAREN,"("));
             }
+            else if(c=='-'){
+                tokens.push_back(Token(TokenType::MINUS,"-"));
+            }
+            else if(c=='*'){
+                tokens.push_back(Token(TokenType::MULTIPLY,"*"));
+            }
+            else if(c=='/'){
+                tokens.push_back(Token(TokenType::DIVIDE,"/"));
+            }
+            else if(c=='{'){
+                tokens.push_back(Token(TokenType::LCURL,"{"));
+            }
+            else if(c=='}'){
+                tokens.push_back(Token(TokenType::RCURL,"}"));
+            }
             else{
                 cout<<"Unexpected char: "<<c<<endl;
             }
@@ -123,13 +143,18 @@ string tokenTypeToString(TokenType type) {
         case TokenType::ELSE: return "ELSE";
         case TokenType::WHILE: return "WHILE";
         case TokenType::FOR: return "FOR";
+        case TokenType::MULTIPLY: return "MULTIPLY";
+        case TokenType::DIVIDE: return "DIVIDE";
+        case TokenType::RCURL: return "RCURL";
+        case TokenType::LCURL: return "LCURL";
+        case TokenType::MINUS: return "MINUS";
         default: return "UNKNOWN";
     }
 }
 
 
 int main(){
-    string input=" x= 5+ 3";
+    string input=" x= 5+ (6/5)-8";
     Tokenizer tokenizer(input);
     vector<Token> tokens = tokenizer.tokenize();
 
