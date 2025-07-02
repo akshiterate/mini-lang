@@ -9,3 +9,17 @@
         - a function can be made to tokenize a given input
             - we read char by char(cant split by " " its possible there are no spaces)
             -  an unordered map can be used to match keywords
+
+- Abstract Syntax Tree
+    - Built:
+        - Expression (abstract class)
+        - Number (holds a number string)
+        - Statement (abstract)
+        - LetExpression (assigns a name to an expression)
+    - basically
+    ```
+        Expression* exp = new Number("5");
+        LetExpression stmt("x", exp);
+        stmt.print();
+    ```
+    -gives output   Let(x = 5)
