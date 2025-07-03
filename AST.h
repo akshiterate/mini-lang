@@ -1,6 +1,10 @@
+#ifndef AST_H
+#define AST_H
+
 #include <iostream>
 #include <string>
 using namespace std;
+
 
 class Expression{
 public:
@@ -41,10 +45,4 @@ public:
     }
 };
 
-int main(){
-    Expression* exp = new Number("5");
-    LetExpression stmt("x",exp);
-    stmt.print();
-    return 0;
-
-}
+#endif

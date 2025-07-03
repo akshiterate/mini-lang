@@ -3,49 +3,12 @@
 #include <vector>
 #include <cctype> //for isalpha() and isalnum()
 #include <unordered_map>
+
+#include "Token.h"
+#include "Parser.h"
+#include "AST.h"
+
 using namespace std;
-
-enum TokenType{
-    LET,
-    IDENTIFIER,
-    NUMBER,
-    EQUAL,
-    SEMICOLON,
-    PLUS,
-    PRINT,
-    LPAREN,
-    RPAREN,
-    IF,
-    ELSE,
-    WHILE,
-    FOR,
-    MINUS,
-    DIVIDE,
-    MULTIPLY,
-    RCURL,
-    LCURL
-};
-
-class Token{
-public:
-    TokenType type;
-    string value;
-
-    Token(TokenType t, string v){
-        type = t;
-        value = v;
-    }
-};
-
-
-std::unordered_map<std::string, TokenType> keywordMap = {
-    {"let", TokenType::LET},
-    {"print", TokenType::PRINT},
-    {"if", TokenType::IF},
-    {"else", TokenType::ELSE},
-    {"while", TokenType::WHILE},
-    {"for", TokenType::FOR}
-};
 
 
 class Tokenizer{
@@ -154,13 +117,21 @@ string tokenTypeToString(TokenType type) {
 
 
 int main(){
-    string input=" x= 5+ (6/5)-8";
+    string input="let x = 5;";
     Tokenizer tokenizer(input);
     vector<Token> tokens = tokenizer.tokenize();
 
-    //token printer
-    for (int i = 0; i < tokens.size(); i++) {
-        cout << "Token(" << tokenTypeToString(tokens[i].type) << ", \"" << tokens[i].value << "\")" << endl;
+    //test for tokenization
+    for (Token t : tokens) {
+        cout << "Token(" << tokenTypeToString(t.type) << ", \"" << t.value << "\")" << endl;
+    }
+
+    Parser parser(tokens);
+    Statement* stmt = parser.parseStatement();
+
+    if(stmt){
+        stmt->print();
+        cout<<endl;
     }
 
 
