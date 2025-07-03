@@ -23,3 +23,28 @@
         stmt.print();
     ```
     - gives output   Let(x = 5)
+
+- Parser
+    - **Purpose**
+        - The parser consumes a list of tokens and builds the AST.
+            - It determines structure (syntax) from flat tokens, converting them into hierarchical expressions/statements.
+
+    - **Parser Class**
+        - Fields:
+            - `vector<Token> tokens`
+            - `int position`
+            - `Token current`
+        - Core Functions:
+            - `advance()`: Moves to the next token.
+            - `peek()`: Looks at the upcoming token without advancing.
+            - `parseExpression()`: Parses numeric expressions (currently only supports `Number`).
+            - `parseStatement()`: Parses statements like `let x = 5;`
+
+    - **Parsing Logic**
+        - Example `parseStatement()` handles a `let` statement:
+            1. Check for `LET` token.
+            2. Expect an `IDENTIFIER` (variable name).
+            3. Expect an `EQUAL` token.
+            4. Parse an `Expression` using `parseExpression()`.
+            5. Expect a `SEMICOLON` at the end.
+            6. Return a new `LetExpression`.
